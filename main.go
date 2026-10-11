@@ -35,8 +35,12 @@ type Claims struct {
 var db *sql.DB
 
 func main() {
-	db, err := sql.Open("mysql", "root:my-secret-pw@tcp(127.0.0.1:3306)/bookswap")
+	var err error
+	db, err = sql.Open("mysql", "root:my-secret-pw@tcp(127.0.0.1:3306)/bookswap")
 	if err != nil {
+		log.Fatal("Error while connecting to database:", err)
+	}
+	if err = db.Ping(); err != nil {
 		log.Fatal("Error while connecting to database:", err)
 	}
 	log.Println("Database connected successfully")
